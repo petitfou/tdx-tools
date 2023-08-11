@@ -16,7 +16,7 @@ sudo apt install qemu-utils libguestfs-tools virtinst genisoimage
 (cd build/ubuntu-22.04/guest-image/ && sudo ./create-ubuntu-image.sh -r ../guest_repo/ -f -o ./tdx-guest.qcow2 -u tdx -p tdx -n tdx-guest)
 
 # install host
-(cd build/ubuntu-22.04/host_repo/ && sudo apt -y --allow-downgrades install ./*.deb)
+(cd build/ubuntu-22.04/host_repo/ && sudo apt -y --allow-downgrades --reinstall install ./*.deb)
 
 # reboot host with new kernel
 # check TDX enabled
