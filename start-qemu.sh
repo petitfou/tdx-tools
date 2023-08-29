@@ -232,7 +232,7 @@ process_args() {
             if [[ ${DEBUG} == true ]]; then
                 QEMU_CMD+=",debug=on"
             fi
-            QEMU_CMD+=" -object memory-backend-memfd-private,id=ram1,size=${MEM}"
+            #QEMU_CMD+=" -object memory-backend-memfd-private,id=ram1,size=${MEM}"
             ;;
         "efi")
             PARAM_MACHINE+=",kernel_irqchip=split"
