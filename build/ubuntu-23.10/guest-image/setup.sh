@@ -29,3 +29,10 @@ apt install -y kobuk-tdx-guest
 # measurement tool
 #apt install -y python3-pip
 #python3 -m pip install pytdxattest
+
+
+# setup ssh
+# allow password auth + root login
+sed -i -e '/^AllowRootLogin/s/^.*$/AllowRootLogin yes/' etc/ssh/sshd_config
+sed -i -e '/^KbdInteractiveAuthentication/s/^.*$/KbdInteractiveAuthentication yes/' etc/ssh/sshd_config
+sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication yes/' etc/ssh/sshd_config

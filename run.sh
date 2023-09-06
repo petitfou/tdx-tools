@@ -12,7 +12,7 @@ dpkg -x linux-image-unsigned-${KERNEL_VERSION}_amd64.deb extracted
 cp extracted/boot/vmlinuz-* ./vmlinuz
 rm -rf extracted
 
-#qemu-system-x86_64 -enable-kvm -m 2048 -nic user,model=virtio -drive file=tdx-guest.qcow2,media=disk,if=virtio -nographic
+#qemu-system-x86_64 -enable-kvm -m 2048 -name process=tdxvm,debug-threads=on -nic user,model=virtio -drive file=tdx-guest.qcow2,media=disk,if=virtio -nographic -vga none -device virtio-net-pci,netdev=nic0 -netdev user,id=nic0,hostfwd=tcp::10022-:22 -daemonize
 
 #./start-qemu.sh -i ./tdx-guest.qcow2 -k ./vmlinuz
 
