@@ -14,8 +14,8 @@ write_files:
   path: /etc/netplan/netplan.yaml
 - content: |
     ===========================================================================
-    Welcome to TDX guest.
-    Created by https://github.com/intel/tdx-tools
+    Welcome to Ubuntu mantic (23.10) TDX guest.
+    Created by Kobuk team
     ===========================================================================
   path: /etc/motd
 - content: |
@@ -33,6 +33,12 @@ runcmd:
   - apt install --fix-broken
   - sed -i 's/GRUB_CMDLINE_LINUX_DEFAULT="[^"]*/& ima_hash=sha384 ima_policy=critical_data/' /etc/default/grub.d/50-cloudimg-settings.cfg
   - update-grub2
+
+# HACK way to set root password
+# https://github.com/vmware/photon/issues/931
+# set root password to 123456
+bootcmd:
+  - /bin/sed -E -i 's/^root:([^:]+):.*$/root:\$1\$root\$j0bp.KLPyr.u9kgQ428D10:17764:0:99999:7:::/' /etc/shadow
 
 power_state:
   delay: now

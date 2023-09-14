@@ -2,6 +2,9 @@
 
 apt update
 
+# Intel testing stuff
+apt install -y cpuid
+
 # upgrade before install tdx components to avoid error like this:
 #The following packages have unmet dependencies:
 # grub-efi-amd64 : Conflicts: grub-pc but 2.12~rc1-4ubuntu1 is to be installed
@@ -30,9 +33,8 @@ apt install -y kobuk-tdx-guest
 #apt install -y python3-pip
 #python3 -m pip install pytdxattest
 
-
 # setup ssh
 # allow password auth + root login
-sed -i -e '/^AllowRootLogin/s/^.*$/AllowRootLogin yes/' etc/ssh/sshd_config
-sed -i -e '/^KbdInteractiveAuthentication/s/^.*$/KbdInteractiveAuthentication yes/' etc/ssh/sshd_config
-sed -i -e '/^PasswordAuthentication/s/^.*$/PasswordAuthentication yes/' etc/ssh/sshd_config
+sed -i 's|[#]*PasswordAuthentication .*|PasswordAuthentication yes|g' /etc/ssh/sshd_config
+sed -i 's|[#]*PermitRootLogin .*|PermitRootLogin yes|g' /etc/ssh/sshd_config
+sed -i 's|[#]*KbdInteractiveAuthentication .*|KbdInteractiveAuthentication yes|g' /etc/ssh/sshd_config
