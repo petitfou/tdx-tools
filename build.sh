@@ -23,3 +23,6 @@ sudo chown $USER:$(id -g) ./tdx-guest.qcow2
 # sudo virt-customize -a /tmp/tdx-guest.qcow2   --copy-in ./build/ubuntu-23.10/guest-image/setup.sh:/tmp/
 # sudo virt-customize -a /tmp/tdx-guest.qcow2   --run-command "/tmp/setup.sh"
 
+# Or use guestfish
+# export LIBGUESTFS_DEBUG=1 LIBGUESTFS_TRACE=1
+# guestfish -a tdx-guest.qcow2 
