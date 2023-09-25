@@ -3,7 +3,8 @@
 apt update
 
 # Intel testing stuff
-apt install -y cpuid
+# linux-tools-common for perf, please make sure that linux-tools is also installed
+apt install -y cpuid linux-tools-common msr-tools
 
 # upgrade before install tdx components to avoid error like this:
 #The following packages have unmet dependencies:
