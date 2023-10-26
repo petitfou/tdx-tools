@@ -8,8 +8,8 @@
 CURR_DIR=$(dirname "$(realpath $0)")
 USE_OFFICIAL_IMAGE=true
 FORCE_RECREATE=false
-OFFICIAL_UBUNTU_IMAGE="https://cloud-images.ubuntu.com/mantic/current/"
-CLOUD_IMG="mantic-server-cloudimg-amd64.img"
+OFFICIAL_UBUNTU_IMAGE="https://cloud-images.ubuntu.com/releases/mantic/release/"
+CLOUD_IMG="ubuntu-23.10-server-cloudimg-amd64.img"
 GUEST_IMG="tdx-guest-ubuntu-23.10.qcow2"
 SIZE=50
 GUEST_USER="tdx"

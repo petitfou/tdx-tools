@@ -16,12 +16,12 @@ apt install -y cpuid linux-tools-common msr-tools
 DEBIAN_FRONTEND=noninteractive apt-get --assume-yes --allow-unauthenticated -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 
 # setup TDX guest
-add-apt-repository ppa:kobuk-team/tdx
+add-apt-repository ppa:kobuk-team/tdx-release
 
 # PPA pinning
-cat <<EOF | tee /etc/apt/preferences.d/kobuk-team-tdx-pin-4000
+cat <<EOF | tee /etc/apt/preferences.d/kobuk-team-tdx-release-pin-4000
 Package: *
-Pin: release o=LP-PPA-kobuk-team-tdx
+Pin: release o=LP-PPA-kobuk-team-tdx-release
 Pin-Priority: 4000
 EOF
 
@@ -29,6 +29,10 @@ apt update
 
 # install TDX feature
 apt install -y kobuk-tdx-guest
+
+# modprobe the tdx_guest
+modprobe tdx-guest
+echo tdx-guest > /etc/modprobe.d/tdx-guest.conf
 
 # measurement tool
 #apt install -y python3-pip
