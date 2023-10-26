@@ -21,7 +21,9 @@ GUEST_IMAGE=${PWD}/tdx-guest.qcow2
 TDVF_FIRMWARE=/usr/share/ovmf/OVMF.fd
 
 cp ${GUEST_IMAGE} /tmp/tdx-guest-vm.qcow2
-cp ${GUEST_IMAGE} /tmp/tdx-guest-td.qcow2
+if [ ! -f /tmp/tdx-guest-td.qcow2 ]; then
+  cp ${GUEST_IMAGE} /tmp/tdx-guest-td.qcow2
+fi
 
 REMAINING_QEMUS=$(pidof qemu-system-x86_64)
 if [ ! -z "$REMAINING_QEMUS" ]; then
@@ -35,6 +37,8 @@ set -e
 VM_IMG=/tmp/tdx-guest-td.qcow2
 SSH_PORT=10022
 PROCESS_NAME=td
+# approach 1 : talk to QGS directly
+QUOTE_ARGS="-device vhost-vsock-pci,guest-cid=3"
 qemu-system-x86_64 -D /tmp/tdx-guest-td.log \
 		   -accel kvm \
 		   -m 2G -smp 64 \
@@ -49,7 +53,7 @@ qemu-system-x86_64 -D /tmp/tdx-guest-td.log \
 		   -device virtio-net-pci,netdev=nic0_td -netdev user,id=nic0_td,hostfwd=tcp::${SSH_PORT}-:22 \
 		   -drive file=${VM_IMG},if=none,id=virtio-disk0 \
 		   -device virtio-blk-pci,drive=virtio-disk0 \
-		   -device vhost-vsock-pci,guest-cid=3 \
+		   ${QUOTE_ARGS} \
 		   -monitor unix:/tmp/tdx-demo-td-monitor.sock,server,nowait \
 		   -pidfile /tmp/tdx-demo-td-pid.pid
 
